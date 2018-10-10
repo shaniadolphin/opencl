@@ -209,7 +209,9 @@ class testopencl(object):
         os.environ["PYOPENCL_CTX"] = "0:0"
         platforms = cl.Platforms()
         print("OpenCL devices:\n%s"%platforms.dump_devices())
-        ctx = platforms.create_some_context()
+        #ctx = platforms.create_some_context()
+        ctx = cl.Context(platforms.platforms[0],
+                         platforms.platforms[0].devices[0:1])            
         prg = ctx.create_program(testopencl.readoclfile("test.cl"))
         print(prg.kernel_names)
         krn = prg.get_kernel("MatrixMul")

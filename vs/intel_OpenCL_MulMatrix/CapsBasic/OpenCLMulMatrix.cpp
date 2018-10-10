@@ -6,9 +6,9 @@
 using namespace std;
 
 
-#define M 1024
-#define P 512
-#define N 2048
+#define M 800
+#define P 500
+#define N 800
 
 void RunAsCpu(
 	const float *A,
@@ -96,24 +96,21 @@ int main(int argc, const char** argv)
 		);
 		OPENCL_CHECK_ERRORS(error);
 
-		cout << "    [" << i << "] " << platform_name;
-
+		printf("%d:%s",i, platform_name);
 		if (
 			strstr(platform_name, "Intel") &&
 			selected_platform_index == num_of_platforms // have not selected yet
 			)
 		{
-			cout << " [Selected]";
+			printf(" [Selected]");
 			selected_platform_index = i;
 		}
-
-		cout << endl;
+		printf("\n");
 		delete[] platform_name;
 	}
 	if (selected_platform_index == num_of_platforms)
 	{
-		cerr
-			<< "没有找到Intel平台\n";
+		printf("Intel platforms NOT FOUND!!\n");
 		return 1;
 	}
 	//Device
@@ -151,7 +148,7 @@ int main(int argc, const char** argv)
 	double starttime = time_stamp();
 	RunAsCpu(A_h, B_h, C_h);
 	double stoptime = time_stamp();
-	printf("CPU running :%8.6f s\n", stoptime - starttime);
+	printf("CPU running:%8.6f s\n", stoptime - starttime);
 
 	//读取OpenCLSum.cl文件内容
 	FILE* fp = fopen("OpenCLMulMatrix.cl", "rb");
@@ -165,7 +162,7 @@ int main(int argc, const char** argv)
 	//创建编译运行kernel函数
 	cl_program program = clCreateProgramWithSource(context, 1, &source, &src_size, &error);
 	OPENCL_CHECK_ERRORS(error)
-		delete[] source;
+	delete[] source;
 
 	// Builds the program
 	error = clBuildProgram(program, 1, &device, NULL, NULL, NULL);
@@ -187,7 +184,7 @@ int main(int argc, const char** argv)
 	delete[] build_log;
 
 	//Extracting the kernel
-	cl_kernel run_as_gpu_1 = clCreateKernel(program, "RunAsGpu_1", &error);
+	cl_kernel run_as_gpu_1 = clCreateKernel(program, "RunAsGpu_2", &error);
 	OPENCL_CHECK_ERRORS(error)
 	//设置kernel参数
 	cl_int M_d = M;
@@ -213,7 +210,7 @@ int main(int argc, const char** argv)
 	clGetEventProfilingInfo(ev, CL_PROFILING_COMMAND_END,
 		sizeof(cl_ulong), &endTime, NULL);
 	cl_ulong kernelExecTimeNs = endTime - startTime;
-	printf("Gpu_1 running :%8.6f ms\n", kernelExecTimeNs*1e-6);
+	printf("GPU_1 running:%8.6f ms\n", kernelExecTimeNs*1e-6);
 	//取得kernel返回值
 	float* gpu_C_1 = new float[M*N];
 	clEnqueueReadBuffer(queue, C_d, CL_TRUE, 0, M*N*sizeof(float), gpu_C_1, 0, NULL, NULL);
@@ -243,7 +240,7 @@ int main(int argc, const char** argv)
 	clGetEventProfilingInfo(ev, CL_PROFILING_COMMAND_END,
 		sizeof(cl_ulong), &endTime, NULL);
 	kernelExecTimeNs = endTime - startTime;
-	printf("Gpu_2 running:%8.6f ms\n", kernelExecTimeNs*1e-6);
+	printf("GPU_2 running:%8.6f ms\n", kernelExecTimeNs*1e-6);
 	//取得kernel返回值
 	float* gpu_C_2 = new float[M*N];
 	clEnqueueReadBuffer(queue, C_d, CL_TRUE, 0, M*N * sizeof(float), gpu_C_2, 0, NULL, NULL);
