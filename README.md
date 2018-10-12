@@ -366,3 +366,5 @@ Platform 0: NVIDIA CUDA
 |5|`https://blog.csdn.net/LIYUAN123ZHOUHUI/article/details/52850282`|[opencl中工作组和工作项](https://blog.csdn.net/LIYUAN123ZHOUHUI/article/details/52850282 "CSDN文章")|
 
 ****
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
