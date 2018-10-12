@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="OpenCLMulMatrix.cl" />
+    <ClCompile Include="app.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OpenCLMulMatrix.cpp" />
+    <None Include="kernelfun.cl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B5BE6731-9238-4AE9-A60C-97D66A3A55FE}</ProjectGuid>
