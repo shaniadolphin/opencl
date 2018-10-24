@@ -9,6 +9,8 @@
 
 ## 矩阵乘法
 &emsp;&emsp;对于以下是一个常见的线性方程组，
+![pi](http://latex.codecogs.com/png.latex?\left\{\n\begin{array}{c}\na_{11}x_{1}+b_{12}x_{2} =y_1\\\na_{21}x_{1}+b_{22}x_{2} =y_2\\\n\end{array}\n\right.)
+
 $$
 \left \{ 
 \begin{array}{c}
