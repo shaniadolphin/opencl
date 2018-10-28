@@ -33,8 +33,8 @@ int main(void)
 	/*=================================================
 	define parameters for image, filter, kernels
 	=================================================*/
-	int const W = 100;			//image width
-	int const H = 100;			//image height
+	int const W = 300;			//image width
+	int const H = 300;			//image height
 	int const K = 3;			//filter kernel size
 	int const Wn = (W + K - 1); //padded image width
 	int const Hn = (H + K - 1); //padded image height
@@ -56,9 +56,9 @@ int main(void)
 	for (i = 0; i < Hn; i++) {
 		if(i<10)printf("row[%d]:\t", i);
 		for (j = 0; j < Wn; j++) {
-			if(j<10)printf("%d,\t", data_vecs[i*Wn + j]);
+			if ((j<10) && (i<10))printf("%d,\t", data_vecs[i*Wn + j]);
 		}
-		printf("\n");
+		if (i<10)printf("\n");
 	}
 	printf("\n");
 
@@ -171,10 +171,10 @@ int main(void)
 	for (i = 0; i < H; i++) {
 		if (i<10)printf("row[%d]:\t", i);
 		for (j = 0; j < W; j++) {
-			if(j<10)printf("%d,\t", result[i*W + j]);
+			if((j<10)  && (i<10))printf("%d,\t", result[i*W + j]);
 			fprintf(f_img_out, "%d,\t", result[i*W + j]);
 		}
-		printf("\n");
+		if (i<10)printf("\n");
 		fprintf(f_img_out, "\n");
 	}
 	printf("\n");
